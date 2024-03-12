@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SSAFY BOOK CAFE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script type="text/javascript" src="js/httpRequest.js"></script>
+    <script type="text/javascript" src="js/cafe.js"></script>
+  </head>
+  <body>
+    <!-- 상단 Header Start  -->
+    <header>
+      <nav>
+        <a class="header_nav_home" href="#">SSAFY BookCafe</a>
+        <a class="" href="#">공지사항</a>
+
+        <div class="header_nav_search"></div>
+
+        <div class="header_nav_menu">
+          <div id="header_nav_confirm_off">
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#" onclick="javascript:login();">로그인</a>
+            </div>
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#">회원가입</a>
+            </div>
+          </div>
+          <div id="header_nav_confirm_on" style="display: none">
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#" onclick="javascript:logout();">로그아웃</a>
+            </div>
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#">마이페이지</a>
+            </div>
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#" onclick="javascript:pollMake();">관리자</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- 상단 Header End  -->
+  </body>
+</html>
