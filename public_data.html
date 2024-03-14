@@ -36,57 +36,47 @@
   <body>
     <div class="container">
       <div id="header"></div>
-      <!-- <div class="row">
-        <div class="col-md-3">
-          <div class="text-center mt-3">
-            <img src="./assets/img/profile.png" class="img-thumbnail" alt="프로필" />
-          </div>
-        </div> -->
-            
-        
-
-
         <div class="col" style="margin-top:100px;">
-          <form class="d-flex" role="search" onsubmit="searchPlaces(); return false;"></form>
-              <select id="search-area" class="form-select" aria-label="Default select example">
-                <option value="0" selected>검색 할 지역 선택</option>
-              </select>
-              <select id="search-content-id" class="form-select" aria-label="Default select example">
-                <option value="0" selected>관광지 유형</option>
-                <option value="12">관광지</option>
-                <option value="14">문화시설</option>
-                <option value="15">축제공연행사</option>
-                <option value="25">여행코스</option>
-                <option value="28">레포츠</option>
-                <option value="32">숙박</option>
-                <option value="38">쇼핑</option>
-                <option value="39">음식점</option>
-              </select>
-            
-              <input
-              id="search-keyword"
-                class="form-control"
-                type="text"
-                placeholder="검색어"
-                aria-label="검색어"
-                value="서울"
-              />
-              <button type="submit" name="name1" style="background-color: #f5f0f0;">검색</button>
-            </form>
-                <div class="col" id="map" style="height : 600px">				
-                    <!-- 지도타입 컨트롤 div 입니다 -->
-                    <div class="custom_typecontrol radius_border">
-                        <button type="submit" id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">로드뷰</button>
-                           <button type="submit" id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이맵</button>
-                    </div>
-                    <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
-                    <div class="custom_zoomcontrol radius_border"> 
-                        <span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
-                        <span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
-                    </div>
+              <div class="row">
+                <div class="col-md-4">
+                    <select id="search-area" class="form-select mb-3" aria-label="Default select example">
+                        <option value="0" selected>검색 할 지역 선택</option>
+                    </select>
                 </div>
-        </div>
-        <!-- <div class="col-md-9" style="background-color: black;width: 100%;">-->
+                <div class="col-md-4">
+                    <select id="search-content-id" class="form-select mb-3" aria-label="Default select example">
+                        <option value="0" selected>관광지 유형</option>
+                        <option value="12">관광지</option>
+                        <option value="14">문화시설</option>
+                        <option value="15">축제공연행사</option>
+                        <option value="25">여행코스</option>
+                        <option value="28">레포츠</option>
+                        <option value="32">숙박</option>
+                        <option value="38">쇼핑</option>
+                        <option value="39">음식점</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <form class="d-flex" role="search" onsubmit="searchPlaces(); return false;">
+                        <input id="search-keyword" class="form-control mb-4" type="search" placeholder="검색어" aria-label="검색어" value="서울" />
+                        <button class="btn btn-outline-secondary" name="name1" type="submit">검색</button>
+                    </form>
+                </div>
+              </div>
+              <div class="col" id="map" style="height : 600px">				
+                  <!-- 지도타입 컨트롤 div 입니다 -->
+                  <div class="custom_typecontrol radius_border">
+                      <button type="submit" id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">로드뷰</button>
+                          <button type="submit" id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이맵</button>
+                  </div>
+                  <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
+                  <div class="custom_zoomcontrol radius_border"> 
+                      <span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
+                      <span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
+                  </div>
+              </div>
+      </div>
+    </div>
   </body>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7653085a7d54c6d8dbbdb60e5fb00ef&libraries=services,clusterer,drawing"></script>
@@ -100,33 +90,23 @@ var overlays = [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
-    	center: new kakao.maps.LatLng(33.350701, 126.570667), // 지도의 중심좌표
+    	center: new kakao.maps.LatLng(37.566535, 126.9779692), // 지도의 중심좌표
         level: 9 // 지도의 확대 레벨
     };  
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
-//지도타입 컨트롤의 지도 또는 스카이뷰 버튼을 클릭하면 호출되어 지도타입을 바꾸는 함수입니다
-function setMapType(maptype) { 
-    var roadmapControl = document.getElementById('btnRoadmap');
-    var skyviewControl = document.getElementById('btnSkyview'); 
-    if (maptype === 'roadmap') {
-        map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);    
-        roadmapControl.className = 'selected_btn';
-        skyviewControl.className = 'btn';
-    } else {
-        map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);    
-        skyviewControl.className = 'selected_btn';
-        roadmapControl.className = 'btn';
-    }
-}
-// 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-function zoomIn() {
-    map.setLevel(map.getLevel() - 1);
-}
-// 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-function zoomOut() {
-    map.setLevel(map.getLevel() + 1);
-}
+
+// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+var mapTypeControl = new kakao.maps.MapTypeControl();
+
+// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
 // 키워드로 장소를 검색합니다
@@ -152,13 +132,22 @@ function searchPlaces() {
               searchUrl += `&keyword=${keyword}`
             };
 
-            // fetch(searchUrl)
-            //     .then((response) => response.json())
-            //     .then((data) => makeList(data));
-
+            console.log(searchUrl);
             fetch(searchUrl)
-                .then((response) => response.json())
-                .then((data) => placesSearchCB(data,null));
+                .then((response) => {
+                    // 응답을 JSON으로 파싱하여 반환합니다.
+                    return response.json();
+                })
+                .then((data) => {
+                    // 받은 데이터를 처리하는 함수를 호출합니다.
+
+                    placesSearchCB(data, null);
+                })
+                .catch((error) => {
+                    // 오류 발생 시 처리하는 부분
+                    console.error('API 요청 오류 발생:', error);
+                });
+
         });
     });
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
@@ -254,7 +243,6 @@ function displayMarker(places,i) {
                             
                         '</div>';
 
-	  // content.style.cssText = 'background:white;';
     var closeBtn = document.createElement('button');
     closeBtn.innerHTML = '<i class="fa-solid fa-rectangle-xmark fa-xl" style="font-size:20px;"></i>';
     closeBtn.style.cssText = 'position:absolute; width:20px; height:18px; border:none;background:black;';
@@ -313,7 +301,7 @@ let areaUrl =
   "https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +
   serviceKey +
   "&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json";
-
+console.log(areaUrl);
 fetch(areaUrl, { method: "GET" })
   .then((response) => response.json())
   .then((data) => makeOption(data));
@@ -330,29 +318,6 @@ function makeOption(data) {
     sel.appendChild(opt);
   });
 }
-
-// 검색 버튼을 누르면..
-// 지역, 유형, 검색어 얻기.
-// 위 데이터를 가지고 공공데이터에 요청.
-// 받은 데이터를 이용하여 화면 구성.
-// document.getElementById("search-keyword").addEventListener("click", () => {
-//   let searchUrl = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=${serviceKey}&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A`;
-// //   let areaCode = document.getElementById("search-area").value;
-// //   let contentTypeId = document.getElementById("search-content-id").value;
-//   let keyword = document.getElementById("search-keyword").value;
-//     console.log(keyword);
-//   if (parseInt(areaCode)) searchUrl += `&areaCode=${areaCode}`;
-//   if (parseInt(contentTypeId)) searchUrl += `&contentTypeId=${contentTypeId}`;
-//   if (!keyword) {
-//     alert("검색어 입력 필수!!!");
-//     return;
-//   } else searchUrl += `&search-keyword=${keyword}`;
-
-//   fetch(searchUrl)
-//     .then((response) => response.json())
-//     .then((data) => makeList(data));
-// });
-
 
     </script>
 </html>
