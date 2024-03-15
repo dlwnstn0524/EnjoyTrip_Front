@@ -36,6 +36,7 @@
   <body>
     <div class="container">
       <div id="header"></div>
+      <form class="d-flex col" role="search" onsubmit="searchPlaces(); return false;">
         <div class="col" style="margin-top:100px;">
             <div class="row justify-content-center">
                 <div class="col-md-3 text-center">
@@ -57,20 +58,45 @@
                     </select>
                 </div>
                 <div class="col-md-3 text-center">
-                    <form class="d-flex col" role="search" onsubmit="searchPlaces(); return false;">
                         <input id="search-keyword" class="form-control" type="search" placeholder="검색어" aria-label="검색어" value="서울" />
                         <button class="btn btn-primary btn-sm ms-md-3" name="name1" type="submit" style="white-space: nowrap;">검색</button> <!-- ms-md-2 클래스를 추가하여 중간 및 큰 화면 크기에서 왼쪽 마진을 추가 -->
-                    </form>
                 </div>
             </div>
               <div class="col" id="map" style="height : 600px"></div>
       </div>
+    </form>
     </div>
   </body>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7653085a7d54c6d8dbbdb60e5fb00ef&libraries=services,clusterer,drawing"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script><!-- 관광지 공유 api -->
+<script>
+    // index page 로딩 후 전국의 시도 설정.
+let serviceKey = "98bjcTT737wV9WBAYZJCG44LYmmdDeoYCYochcob51sm%2BEj%2FzxuTjjGdOI37R2tJOK0JEHgh4%2Fxeg4f2YYCNCw%3D%3D";
+let areaUrl =
+"https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +
+serviceKey +
+"&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json";
+console.log(areaUrl);
+fetch(areaUrl, { method: "GET" })
+.then((response) => response.json())
+.then((data) => makeOption(data));
 
+function makeOption(data) {
+console.log(data);
+let areas = data.response.body.items.item;
+let sel = document.getElementById("search-area");
+console.log(sel);
+areas.forEach((area) => {
+let opt = document.createElement("option");
+opt.setAttribute("value", area.code);
+opt.appendChild(document.createTextNode(area.name));
+
+sel.appendChild(opt);
+});
+}
+
+</script>
 
 <script>
 // 마커를 담을 배열입니다
@@ -123,15 +149,8 @@ function searchPlaces() {
 
             console.log(searchUrl);
             fetch(searchUrl)
-                .then((response) => {
-                    // 응답을 JSON으로 파싱하여 반환합니다.
-                    return response.json();
-                })
-                .then((data) => {
-                    // 받은 데이터를 처리하는 함수를 호출합니다.
-
-                    placesSearchCB(data, null);
-                })
+                .then((response) => {return response.json();})
+                .then((data) => {placesSearchCB(data, null);})
                 .catch((error) => {
                     // 오류 발생 시 처리하는 부분
                     console.error('API 요청 오류 발생:', error);
@@ -151,11 +170,10 @@ var positions = []
 function placesSearchCB(data, status) {
   let trips = data.response.body.items.item;
   displayPlaces(trips);
+  console.log(trips);
     if (status === kakao.maps.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-		
-        
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert('검색 결과가 존재하지 않습니다.');
         return;
@@ -283,30 +301,5 @@ function displayMarker(places,i) {
 </script>
 
 
-<script>
-        // index page 로딩 후 전국의 시도 설정.
-let serviceKey = "98bjcTT737wV9WBAYZJCG44LYmmdDeoYCYochcob51sm%2BEj%2FzxuTjjGdOI37R2tJOK0JEHgh4%2Fxeg4f2YYCNCw%3D%3D";
-let areaUrl =
-  "https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +
-  serviceKey +
-  "&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json";
-console.log(areaUrl);
-fetch(areaUrl, { method: "GET" })
-  .then((response) => response.json())
-  .then((data) => makeOption(data));
 
-function makeOption(data) {
-  console.log(data);
-  let areas = data.response.body.items.item;
-  let sel = document.getElementById("search-area");
-  areas.forEach((area) => {
-    let opt = document.createElement("option");
-    opt.setAttribute("value", area.code);
-    opt.appendChild(document.createTextNode(area.name));
-
-    sel.appendChild(opt);
-  });
-}
-
-    </script>
 </html>
