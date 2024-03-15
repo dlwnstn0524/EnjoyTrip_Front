@@ -17,6 +17,17 @@
     />
   </head>
   <style>
+    @font-face {
+        font-family: 'WAGURITTF';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/WAGURITTF.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .my-text {
+        font-family: 'WAGURITTF', sans-serif; /* WAGURITTF 폰트 적용, 폰트가 로드되지 않았을 경우에는 sans-serif 폰트를 대체로 사용 */
+    }
+
     .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 144px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
     .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
@@ -42,6 +53,7 @@
     .distanceInfo .label {display:inline-block;width:50px;}
     .distanceInfo:after {content:none;}
 
+    /* 선택한 장소 info */
     .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
     .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
     .map_wrap {position:relative;width:100%;height:500px;}
@@ -55,34 +67,70 @@
   <script src="assets/js/commponent.js"></script>
   <body>
     <div class="container">
-      <div id="header"></div>
-        <div class="col" style="margin-top:100px;">
-            <form role="search" onsubmit="searchPlaces(); return false;">
-                <div class="row justify-content-center">
-                    <div class="col-md-3 text-center">
-                        <select id="search-area" class="form-select mb-3" aria-label="Default select example">
-                            <option value="0" selected>검색 할 지역 선택</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <select id="search-content-id" class="form-select mb-3" aria-label="Default select example">
-                            <option value="0" selected>관광지 유형</option>
-                            <option value="12">관광지</option>
-                            <option value="14">문화시설</option>
-                            <option value="15">축제공연행사</option>
-                            <option value="25">여행코스</option>
-                            <option value="28">레포츠</option>
-                            <option value="32">숙박</option>
-                            <option value="38">쇼핑</option>
-                            <option value="39">음식점</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-3 text-center d-flex col">
-                            <input id="search-keyword" class="form-control mr-2" type="search" placeholder="검색어" aria-label="검색어"/>
-                            <button class="btn btn-primary btn-sm " name="name1" type="submit" style="white-space: nowrap;margin-left:5%">검색</button> <!-- ms-md-2 클래스를 추가하여 중간 및 큰 화면 크기에서 왼쪽 마진을 추가 -->
-                    </div>
-                </div>
-            </form>
+      <!-- header start -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+        <div class="container">
+          <a class="navbar-brand text-primary fw-bold" href="main.html">
+            <img src="./assets/img/logo.PNG" alt="" width="60" />
+            EnjoyTrip!
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="public_data.html">지역별관광지</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="trip_plan.html">나의여행계획</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">핫플자랑하기</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">여행정보공유</a>
+              </li>
+            </ul>
+            <!-- 로그인 전 -->
+            <ul class="navbar-nav mb-2 me-2 mb-lg-0" id="logoutstate">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="join.html">회원가입</a>
+              </li>
+              <li class="nav-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a class="nav-link" aria-current="page" href="#">로그인</a>
+              </li>
+            </ul>
+            <!-- 로그인 후 -->
+            <ul class="navbar-nav mb-2 me-2 mb-lg-0" id="loginstate">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="/main.html"
+                  onclick="javascript:logout();"
+                  >로그아웃</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="mypage.html">마이페이지</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- header end -->
+      
+      <div class="row justify-content-center " style="margin-top:150px;">
+            <div  class="my-text col-md-6 text-center fw-bold mb-5 fs-2 ">여행은 또다른 나를 만나는 시간이다.</div>
             <div class="map_wrap">
                 <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
             
@@ -387,26 +435,22 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
         content += '    </li>';
         content += '</ul>'
 
-        let picktrip = "";
+        var picktrip = "";
+        var idx = 1;
+        var el = document.getElementById('menu_wrap');
         pickmarkers.forEach(element => {
             searchDetailAddrFromCoords(element, function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-                detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                var detailAddr = '<div>[' + idx++ + '] 지번 주소 : ' + result[0].address.address_name + '</div>';
             
-                var content = '<div class="bAddr">' +
+                var content = '<div class="fw-bolder text-info my-text">' +
                                 detailAddr + 
                             '</div><br>';
-                picktrip += content;
-                var el = document.getElementById('menu_wrap');
                 el.innerHTML += content;
                 }   
                 
             });
-            console.log(picktrip);
         });
-        // console.log(picktrip);
-
 
         return content;
     }
@@ -416,54 +460,23 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
         geocoder.coord2Address(coords.La, coords.Ma, callback);
 
     }
-
 // 선 그리기 end
 
-// 선택한 장소에 대한 표현 start
+
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
-
-// kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-//     searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
-//         if (status === kakao.maps.services.Status.OK) {
-//             var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-            
-//             var content = '<div class="bAddr">' +
-//                             '<span class="title">법정동 주소정보</span>' + 
-//                             detailAddr + 
-//                         '</div>';
-//             console.log(content);
-//         }   
-//     });
-// });
-
 
 // 선택한 장소에 대한 표현 end
 </script>
 
 
 <script>
-        // index page 로딩 후 전국의 시도 설정.
+// index page 로딩 후 전국의 시도 설정.
 let serviceKey = "98bjcTT737wV9WBAYZJCG44LYmmdDeoYCYochcob51sm%2BEj%2FzxuTjjGdOI37R2tJOK0JEHgh4%2Fxeg4f2YYCNCw%3D%3D";
 let areaUrl =
-  "https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +
-  serviceKey +
-  "&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json";
-// fetch(areaUrl, { method: "GET" })
-//   .then((response) => response.json())
-//   .then((data) => makeOption(data));
-
-// function makeOption(data) {
-//   let areas = data.response.body.items.item;
-//   let sel = document.getElementById("search-area");
-//   areas.forEach((area) => {
-//     let opt = document.createElement("option");
-//     opt.setAttribute("value", area.code);
-//     opt.appendChild(document.createTextNode(area.name));
-
-//     sel.appendChild(opt);
-//   });
-// }
+"https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +
+serviceKey +
+"&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json";
 
 </script>
 </html>
