@@ -101,26 +101,44 @@
     <!-- validation-form -->
     <!-- 사용자 입력값에 따른 유효성 검사 -->
     <script>
+      function handleSubmit(event) {
+        event.preventDefault(); // 기본 동작 방지
+
+        // 입력된 값 가져오기
+        const name = document.getElementById('name').value;
+        const userId = document.getElementById('userId').value;
+        const password = document.getElementById('password').value;
+        const checkPassword = document.getElementById('checkPassword').value;
+        const email = document.getElementById('email').value;
+        const region = document.getElementById('region').value;
+        console.log(this);
+        if (this.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        this.classList.add("was-validated");
+
+        // 사용자 데이터 생성
+        const userData = {
+          name,
+          userId,
+          password,
+          email,
+          region,
+        };
+
+        // localStorage에 데이터 저장
+        localStorage.setItem("register", JSON.stringify(userData));
+
+        // 성공 메시지 표시
+        alert('회원가입이 완료되었습니다.');
+      }
+
       window.addEventListener(
         "load",
         () => {
           const forms = document.getElementsByClassName("validation-form");
-
-          Array.prototype.filter.call(forms, (form) => {
-            form.addEventListener(
-              "submit",
-              function (event) {
-                var pw1 = document.querySelector("#password");
-                console.log(pw1.value);
-                if (form.checkValidity() === false) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-                form.classList.add("was-validated");
-              },
-              false
-            );
-          });
+          forms[0].addEventListener("submit", handleSubmit, false);
         },
         false
       );
