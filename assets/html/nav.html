@@ -31,7 +31,7 @@
         </li>
       </ul>
       <!-- 로그인 전 -->
-      <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+      <ul class="navbar-nav mb-2 me-2 mb-lg-0" id="logoutstate">
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="join.html">회원가입</a>
         </li>
@@ -40,9 +40,11 @@
         </li>
       </ul>
       <!-- 로그인 후 -->
-      <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+      <ul class="navbar-nav mb-2 me-2 mb-lg-0" id="loginstate">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">로그아웃</a>
+          <a class="nav-link" aria-current="page" href="/main.html" onclick="javascript:logout();"
+            >로그아웃</a
+          >
         </li>
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="#">마이페이지</a>
@@ -68,29 +70,36 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="userId">아이디 : </label>
-          <input type="text" class="form-control" id="userId" required />
+          <input type="text" class="form-control" id="userid" required />
           <div class="invalid-feedback">아이디를 입력해주세요.</div>
         </div>
 
         <div class="mb-3">
           <label for="password">비밀번호 : </label>
-          <input type="password" class="form-control" id="password" required />
+          <input type="password" class="form-control" id="passWord" required />
           <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
         </div>
       </div>
-      <div class="modal-footer">
-        <div class="row mb-3">
-          <div class="col">
+      <div class="justify-content-end">
+        <div class="d-flex justify-content-end me-2 mb-2">
+          <div class="">
             <label for="name"></label>
-            <button type="login" class="btn btn-outline-primary">회원가입</button>
+            <button
+              type="submit"
+              class="btn btn-outline-primary"
+              id="LOGIN"
+              onclick="javascript:login();"
+            >
+              로그인
+            </button>
           </div>
-          <div class="col">
+          <div class="">
             <label for="findId"></label>
-            <button type="" class="btn btn-outline-success">아이디찾기</button>
+            <button type="submit" class="btn btn-outline-success">ID찾기</button>
           </div>
-          <div class="col">
+          <div class="">
             <label for="findPassword"></label>
-            <button type="login" class="btn btn-outline-secondary">비밀번호찾기</button>
+            <button type="submit" class="btn btn-outline-secondary">PW찾기</button>
           </div>
         </div>
       </div>
