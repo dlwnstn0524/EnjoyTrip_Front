@@ -1,7 +1,6 @@
 window.onload = function includeNav() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
-    console.log(this);
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById("header").innerHTML = this.responseText;
       }
@@ -11,7 +10,6 @@ window.onload = function includeNav() {
 
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
-    console.log(this);
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById("footer").innerHTML = this.responseText;
       }
