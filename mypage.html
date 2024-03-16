@@ -281,21 +281,19 @@
         false
       );
       
-      window.onload = function() {
-
-const session = JSON.parse(localStorage.getItem("isLogin"));
-console.log(session);
-if (session == true) {
-  const wrapper = document.querySelector("#loginstate");
-  wrapper.setAttribute("style", "display:flex");
-  const wrapper1 = document.querySelector("#logoutstate");
-  wrapper1.setAttribute("style", "display:none");
-} else {
-  const wrapper = document.querySelector("#logoutstate");
-  wrapper.setAttribute("style", "display:flex");
-  const wrapper1 = document.querySelector("#loginstate");
-  wrapper1.setAttribute("style", "display:none");
-}
+window.onload = function() {
+  const session = JSON.parse(localStorage.getItem("isLogin"));
+  if (session == true) {
+    const wrapper = document.querySelector("#loginstate");
+    wrapper.setAttribute("style", "display:flex");
+    const wrapper1 = document.querySelector("#logoutstate");
+    wrapper1.setAttribute("style", "display:none");
+  } else {
+    const wrapper = document.querySelector("#logoutstate");
+    wrapper.setAttribute("style", "display:flex");
+    const wrapper1 = document.querySelector("#loginstate");
+    wrapper1.setAttribute("style", "display:none");
+  }
 }
 
 
