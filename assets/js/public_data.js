@@ -224,7 +224,6 @@
           '<div class="title">' +
           places[i].title +
           // // 버튼 추가
-          // '<button id="closeBtn" onclick="closeBtn()">123</button>'+
           // // 버튼 추가 end
           "</div>" +
           '<div class="body">' +
@@ -243,8 +242,6 @@
           "</div>" +
           "</div>" +
           "</div>";
-  
-        // <button class="btn btn-primary btn-sm " name="name1" type="submit" style="white-space: nowrap;margin-left:5%">검색</button>
   
         var closeBtn = document.createElement("button");
         closeBtn.className = "btn btn-primary btn-sm";
@@ -268,11 +265,6 @@
   
         overlays.push(overlay);
         return overlay;
-      }
-  
-      function closeBtn() {
-        // overlay.setMap(null);
-        alert("123");
       }
   
       // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다

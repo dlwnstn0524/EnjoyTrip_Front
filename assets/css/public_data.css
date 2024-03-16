@@ -1,10 +1,10 @@
 .wrap {
     position: absolute;
     left: 0;
-    bottom: 40px;
+    bottom: 30px;
     width: 288px;
-    height: 144px;
-    margin-left: -144px;
+    height: 140px;
+    margin-left: -140px;
     text-align: left;
     overflow: hidden;
     font-size: 12px;
